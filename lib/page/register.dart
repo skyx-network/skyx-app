@@ -236,7 +236,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 GestureDetector(
                                   onTap: () async {
                                     await launchUrl(
-                                        Uri.parse("https://www.baidu.com"));
+                                        Uri.parse("https://skyxglobal.com/#/user-agreement"));
                                   },
                                   child: Text(
                                     "User Agreement",
@@ -247,7 +247,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 GestureDetector(
                                   onTap: () async {
                                     await launchUrl(
-                                        Uri.parse("https://www.baidu.com"));
+                                        Uri.parse("https://skyxglobal.com/#/privacy-policy"));
                                   },
                                   child: Text(
                                     "Privacy Policy",

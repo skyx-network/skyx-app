@@ -33,8 +33,9 @@ class MyDialog {
                           if (title != null)
                             Text(
                               title,
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           const SizedBox(
                             height: 10,
@@ -83,7 +84,9 @@ class MyDialog {
                                 if (ok != null) {
                                   ok();
                                 }
-                                Navigator.of(context).pop(); // 关闭对话框
+                                if(Navigator.of(context).canPop()){
+                                  Navigator.of(context).maybePop(); // 关闭对话框
+                                }
                               },
                             ),
                           )

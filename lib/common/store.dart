@@ -98,6 +98,26 @@ class Store {
     }).toList();
   }
 
+  Future<void> deleteAccount(StoreAccountEntity? accountEntity) async {
+    if (accountEntity == null) {
+      return;
+    }
+    var accounts = getAccounts();
+    if (accounts.isEmpty) {
+      return;
+    }
+    print("first accounts: $accounts");
+    var findAccount =
+        accounts.firstWhereOrNull((account) => account.id == accountEntity.id);
+    // if (findAccount == null) {
+    //   return;
+    // }
+    accounts.remove(findAccount);
+    print("after remove accounts: $accounts");
+    await _sharedPreferences.setStringList(
+        "_Accounts", accounts.map((e) => e.toString()).toList());
+  }
+
   //添加一个用户到存储中
   Future<void> addAccount(LoginResponseEntity response) async {
     try {

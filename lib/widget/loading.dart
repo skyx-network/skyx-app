@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Loading {
-  static void show(String label) {
+  static void show(String? label) {
     Get.dialog(
       barrierDismissible: false,
       Center(
@@ -25,7 +25,7 @@ class Loading {
                   height: 20,
                 ),
                 Text(
-                  label,
+                  label ?? "",
                   style: TextStyle(fontSize: 18, color: Colors.black),
                 )
               ],

@@ -16,7 +16,8 @@ import 'token_interceptor.dart';
 class Api {
   static final Api _singleton = Api._internal();
 
-  final String baseUrl = "https://test-bsx-svc.xdata.net";
+  // final String baseUrl = "https://test-bsx-svc.xdata.net";
+  final String baseUrl = "https://skyxglobal.com";
   late Dio dio;
 
   factory Api() {
@@ -53,10 +54,12 @@ class Api {
         if (res?.statusCode == 400) {
           var resMap = jsonDecode(res.toString());
           if (resMap["code"] == 701) {
-            DefaultToast.show('Access too frequent, please wait a moment.', type: DefaultToastType.Error);
+            DefaultToast.show('Access too frequent, please wait a moment.',
+                type: DefaultToastType.Error);
           }
           if (resMap["code"] == 702) {
-            DefaultToast.show('Entity already exists', type: DefaultToastType.Error);
+            DefaultToast.show('Entity already exists',
+                type: DefaultToastType.Error);
           }
         } else if (res?.statusCode != 200) {
           DefaultToast.show('Unknown error (${res?.statusCode})');
@@ -82,9 +85,22 @@ class Api {
     }
   }
 
+  Future<void> sendResetPasswordEmail(String email) async {
+    ResponseModelEntity response = await http(
+        "post", "/api/v1/user/password/resetEmail",
+        body: {"email": email});
+    if (response.code == 701) {
+      print("发送太多次了，请稍后重试");
+    }
+  }
+
   Future<void> register(String code, String email, String password) async {
     await http("post", "/api/v1/user/register",
         body: {"code": code, "email": email, "password": password});
+  }
+
+  Future<void> deleteAccount() async {
+    await http("delete", "/api/v1/user/myAccount");
   }
 
   Future<LoginResponseEntity> login(String email, String password) async {

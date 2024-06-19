@@ -1,3 +1,4 @@
+import 'package:bloomskyx_app/common/api/api.dart';
 import 'package:bloomskyx_app/common/icon/setting_icon.dart';
 import 'package:bloomskyx_app/common/store.dart';
 import 'package:bloomskyx_app/page/switch_account.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+
+import '../widget/loading.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
@@ -31,8 +34,25 @@ class SettingPage extends StatelessWidget {
         color: Color(0xFFe3b845),
       ),
       iconBackgroundColor: Color(0xFFfcf8e7),
-      onTap: () {
-        print("123");
+      onTap: () async {
+        try {
+          Loading.show("");
+          await Api().sendResetPasswordEmail(store.getCurrentAccount()!.email);
+          Loading.close();
+
+          MyDialog().show(Get.context!,
+              title: "Change Password",
+              content: Text(
+                "Please check your email to complete password reset ${store.getCurrentAccount()!.email}",
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+              ),
+              showCancel: false);
+        } catch (e) {
+          Loading.close();
+        }
       },
     ),
     SettingItem(
@@ -65,6 +85,58 @@ class SettingPage extends StatelessWidget {
             await store.removeCurrentAccount();
             print("退出登录跳转login");
             Get.offAllNamed("/login");
+          },
+        );
+      },
+    ),
+    SettingItem(
+      title: "Delete Account",
+      desc: "Permanently delete your account and data",
+      icon: Icon(
+        SettingIcon.deleteAccountIcon,
+        color: Color(0xFF5bb297),
+      ),
+      iconBackgroundColor: Color(0xFFe9f9fe),
+      onTap: () {
+        MyDialog().show(
+          Get.context!,
+          title: "Are you sure you want to delete account?",
+          content: Text(
+            "If you delete this account you will nolonger see the data and will lose anypast and future rewards from it. Areyou sure you want to delete this account?",
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14.0,
+              color: Colors.red,
+            ),
+          ),
+          okWidget: Text(
+            "Confirm",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.redAccent,
+            ),
+          ),
+          ok: () async {
+            try {
+              Loading.show("");
+              await Api().deleteAccount();
+              // 删除本地缓存的账户信息，如果还有账户就切换账户，没有就直接到登录页面了
+              store.deleteAccount(store.getCurrentAccount());
+              store.removeCurrentAccount();
+              var accounts = store.getAccounts();
+              //没有其他账户就直接去登录页面，还有账户就切换账户
+              print("accounts isEmpty : ${accounts.isEmpty}");
+              Loading.close();
+              if (accounts.isEmpty) {
+                Get.offAllNamed("/login");
+                return;
+              }
+              Api().setAuth(accounts[0].accessToken);
+              store.setCurrentAccount(accounts[0]);
+              Get.offAllNamed("/");
+            } catch (e) {
+              Loading.close();
+            }
           },
         );
       },
