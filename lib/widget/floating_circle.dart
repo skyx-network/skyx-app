@@ -43,8 +43,8 @@ class _FloatingCircleState extends State<FloatingCircle>
             );
           },
           child: Container(
-            width: 50,
-            height: 50,
+            width: 58,
+            height: 58,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
                 Color(0xFFa0fccc),
@@ -65,7 +65,7 @@ class _FloatingCircleState extends State<FloatingCircle>
                   style: TextStyle(
                     color: Color.fromRGBO(47, 104, 85, 1),
                     fontWeight: FontWeight.w700,
-                    fontSize:  widget.amount <= 0 ? 10 : 15
+                    fontSize:  widget.amount <= 0 ? 10 : 16
                   ),
                 ),
               ),

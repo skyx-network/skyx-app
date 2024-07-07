@@ -11,7 +11,7 @@ class PersionalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 270,
+      // height: 270,
       padding: EdgeInsets.symmetric(horizontal: 20),
       // color: Colors.blue,
       child: Stack(
@@ -20,9 +20,11 @@ class PersionalCard extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
+            height: 230,
             child: Container(
+              // padding: EdgeInsets.symmetric(vertical: 20),
               // margin: EdgeInsets.symmetric(horizontal: 20),
-              height: 210,
+              // height: 230,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -119,7 +121,10 @@ class PersionalCard extends StatelessWidget {
                           "Total Earning", data?.totalEarning.score ?? 0)
                     ],
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           )

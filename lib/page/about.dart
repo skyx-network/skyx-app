@@ -27,15 +27,15 @@ class AboutPage extends StatelessWidget {
             _buildAboutItem(
               "What is NANO?",
               child: Text(
-                "NANO is the weather data point system within the BloomskyX ecosystem. These points can be exchanged for BLX, BloomskyX’s native token.",
+                "NANO is the weather data point system within the SkyX ecosystem. In the future, These points can be exchanged for BLX, SkyX’s native token",
               ),
             ),
-            _buildAboutItem(
-              "Understanding the NANO Amount on Your Grant Card",
-              child: Text(
-                "The NANO value indicated on your grant card represents the total NANO points you are eligible to accumulate throughout the duration of the activity period.",
-              ),
-            ),
+            // _buildAboutItem(
+            //   "Understanding the NANO Amount on Your Grant Card",
+            //   child: Text(
+            //     "The NANO value indicated on your grant card represents the total NANO points you are eligible to accumulate throughout the duration of the activity period.",
+            //   ),
+            // ),
             _buildAboutItem(
               "Guidelines for Accumulating NANO",
               child: Column(
@@ -62,33 +62,33 @@ class AboutPage extends StatelessWidget {
                       "Newcomer Exclusive Reward: Total NANO available on all grant cards / the number of days in the activity period",
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: _buildUl(
-                      Icons.fiber_manual_record_outlined,
-                      "NFT Activation Reward: Daily Total NANO distribution amount / Number of NFTs within the Lock-up Address.",
-                    ),
-                  )
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 15),
+                  //   child: _buildUl(
+                  //     Icons.fiber_manual_record_outlined,
+                  //     "NFT Activation Reward: Daily Total NANO distribution amount / Number of NFTs within the Lock-up Address.",
+                  //   ),
+                  // )
                 ],
               ),
             ),
 
-            _buildAboutItem(
-              "How Can You Obtain a Grant Card?",
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildUl(
-                    Icons.fiber_manual_record,
-                    "By registering as a new user on the BloomskyX platform",
-                  ),
-                  _buildUl(
-                    Icons.fiber_manual_record,
-                    "Through the activation of a BloomSkyX NFT",
-                  ),
-                ],
-              ),
-            ),
+            // _buildAboutItem(
+            //   "How Can You Obtain a Grant Card?",
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.stretch,
+            //     children: [
+            //       _buildUl(
+            //         Icons.fiber_manual_record,
+            //         "By registering as a new user on the SkyX platform",
+            //       ),
+            //       _buildUl(
+            //         Icons.fiber_manual_record,
+            //         "Through the activation of a SkyX NFT",
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

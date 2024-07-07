@@ -82,7 +82,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.example.xj.bloomskyx.bloomskyx_app',
+          userAgentPackageName: 'com.xj.skyx.app',
           retinaMode: false,
         ),
         if (data.isNotEmpty)

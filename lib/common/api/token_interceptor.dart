@@ -2,6 +2,8 @@ import 'package:bloomskyx_app/common/store.dart';
 import 'package:dio/dio.dart';
 import 'package:get/route_manager.dart';
 
+import '../logger.dart';
+
 class TokenInterceptor extends Interceptor {
   final Dio dio;
   final Future<String> Function() refreshTokenCall; // 这应该是一个返回新Token的异步方法
@@ -49,7 +51,9 @@ class TokenInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     print("token onError:${err.response}");
-    if (err.response?.statusCode == 401) {
+    // logger.i(err.requestOptions.path);
+    if (err.response?.statusCode == 401 &&
+        err.requestOptions.path != "/api/v1/user/login") {
       try {
         final opts = err.requestOptions;
 

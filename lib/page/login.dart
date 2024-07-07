@@ -9,6 +9,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widget/my_dialog.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -50,10 +52,10 @@ class _LoginPageState extends State<LoginPage> {
                 height: 200,
                 decoration: BoxDecoration(
                   color: Colors.blue,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(100),
                   ),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [Color(0xFF56c8af), Color(0xFF58bb9f)],
                   ),
                   boxShadow: [
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Container(
@@ -96,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       textInputType: TextInputType.emailAddress,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     DefaultTextField(
@@ -106,21 +108,47 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       textInputType: TextInputType.text,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextButton(
-                      onPressed: () {
-                        print(_emailController.text);
-                        print("forgot");
+                      onPressed: () async {
+                        if (_emailController.text.isEmpty) {
+                          DefaultToast.show(
+                              "Please enter a valid email format for username");
+                          return;
+                        }
+
+                        try {
+                          Loading.show("");
+                          await Api()
+                              .sendResetPasswordEmail(_emailController.text);
+                          Loading.close();
+
+                          MyDialog().show(
+                            Get.context!,
+                            title: "Forgot your Password",
+                            content: const Text(
+                              "Please check your email to complete password reset",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                            showCancel: false,
+                          );
+                        } catch (e) {
+                          print(e);
+                          Loading.close();
+                        }
                       },
-                      child: Text(
+                      child: const Text(
                         "Forgot your password?",
                         style:
                             TextStyle(color: Color(0xFF6cc1a2), fontSize: 16),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
@@ -175,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor:
                               MaterialStateProperty.all(Color(0xFF37ad8b)),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Sign in",
                           style: TextStyle(color: Colors.white),
                         ),
@@ -185,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Get.toNamed("/register");
                       },
-                      child: Text(
+                      child: const Text(
                         "Create an account",
                         style:
                             TextStyle(color: Color(0xFF6cc1a2), fontSize: 16),

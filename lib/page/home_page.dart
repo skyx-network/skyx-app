@@ -1,13 +1,18 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:bloomskyx_app/common/logger.dart';
 import 'package:bloomskyx_app/models/profile_response_entity.dart';
 import 'package:bloomskyx_app/widget/default_toast.dart';
 import 'package:bloomskyx_app/widget/floating_circle.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
 
 import '../common/api/api.dart';
+import '../models/checkin_info_entity_entity.dart';
+
+final Connectivity _connectivity = Connectivity();
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,16 +30,22 @@ class _HomePageState extends State<HomePage>
   late Animation<Offset> _positionAnimation;
 
   ProfileResponseEntity? accountProfile;
-  int hasPendingCheckInScore = 0;
+  CheckinInfoEntityEntity userCheckinInfo = CheckinInfoEntityEntity();
 
   Future<void> fetchData() async {
-    print("请求数据");
-    var data = await Api().getAccountProfile();
-    var checkIn = await Api().getCheckIn();
-    setState(() {
-      accountProfile = data;
-      hasPendingCheckInScore = checkIn;
-    });
+    var connectivityResult = await _connectivity.checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      print("请求数据");
+      var data = await Api().getAccountProfile();
+      var checkinInfo = await Api().getCheckIn();
+      setState(() {
+        accountProfile = data;
+        userCheckinInfo = checkinInfo;
+      });
+    } else {
+      logger.i("没有授权网络连接");
+    }
   }
 
   @override
@@ -64,6 +75,26 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    Future<void> checkin() async {
+      print("checkIn");
+      if (userCheckinInfo.amount <= 0) {
+        DateTime givenDateTime = DateTime.parse(userCheckinInfo.nextCheckTime);
+        DateTime currentDateTime = DateTime.now();
+
+        Duration difference = givenDateTime.difference(currentDateTime);
+        double hoursDifference = difference.inMinutes / 60.0;
+        DefaultToast.show(
+          "Can only be harvest after ${hoursDifference.toStringAsFixed(1)} hour",
+        );
+        return;
+      }
+      _animationController.forward();
+      var reward = await Api().checkIn();
+      setState(() {
+        accountProfile!.balance.score += reward;
+      });
+    }
+
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
@@ -117,20 +148,21 @@ class _HomePageState extends State<HomePage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildGrantBalance(accountProfile),
-                  OutlinedButton(
-                    onPressed: () {
-                      // Handle button press
-                      DefaultToast.show("coming soon...");
-                    },
-                    child: Text(
-                      'Withdraw',
-                      style: TextStyle(color: Color(0xFF336352)),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: BorderSide(color: Color(0xFF6da291), width: 2),
-                    ),
-                  )
+                  //为了过审先隐藏
+                  // OutlinedButton(
+                  //   onPressed: () {
+                  //     // Handle button press
+                  //     DefaultToast.show("coming soon...");
+                  //   },
+                  //   child: Text(
+                  //     'Withdraw',
+                  //     style: TextStyle(color: Color(0xFF336352)),
+                  //   ),
+                  //   style: OutlinedButton.styleFrom(
+                  //     backgroundColor: Colors.white,
+                  //     side: BorderSide(color: Color(0xFF6da291), width: 2),
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -145,9 +177,7 @@ class _HomePageState extends State<HomePage>
                     child: Image.asset("assets/images/home/banner.png"),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      print('Harvested');
-                    },
+                    onTap: checkin,
                     child: Container(
                       width: 130,
                       height: 45,
@@ -204,24 +234,9 @@ class _HomePageState extends State<HomePage>
                         );
                       },
                       child: GestureDetector(
-                        onTap: () async {
-                          print("checkIn");
-                          if (hasPendingCheckInScore <= 0) {
-                            DefaultToast.show(
-                              "Can only be harvest after 5.8 hour",
-                            );
-                            return;
-                          }
-                          print("签到");
-
-                          _animationController.forward();
-                          var reward = await Api().checkIn();
-                          setState(() {
-                            accountProfile!.balance.score += reward;
-                          });
-                        },
+                        onTap: checkin,
                         child: FloatingCircle(
-                          amount: hasPendingCheckInScore,
+                          amount: userCheckinInfo.amount,
                         ),
                       ),
                     ),
@@ -275,31 +290,31 @@ class _HomePageState extends State<HomePage>
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: AllGrants(),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      offset: Offset(0, -1),
-                      spreadRadius: 1,
-                      blurRadius: 15,
-                    )
-                  ],
-                  color: Color(0xFFdffaf3)),
-              height: 180,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Coming soon...",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(20),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: Colors.grey.withOpacity(0.3),
+            //           offset: Offset(0, -1),
+            //           spreadRadius: 1,
+            //           blurRadius: 15,
+            //         )
+            //       ],
+            //       color: Color(0xFFdffaf3)),
+            //   height: 180,
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Text(
+            //         "Coming soon...",
+            //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

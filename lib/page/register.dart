@@ -232,7 +232,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Expanded(
                             child: Wrap(
                               children: [
-                                Text("I've read and agreed to BloomSkyx's "),
+                                Text("I've read and agreed to Skyx's "),
                                 GestureDetector(
                                   onTap: () async {
                                     await launchUrl(
@@ -300,12 +300,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             backgroundColor:
                                 MaterialStateProperty.all(Color(0xFF37ad8b)),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Sign up",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 20,)
                     ],
                   ),
                 ),

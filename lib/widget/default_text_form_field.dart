@@ -66,6 +66,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: widget.hintText,
+              errorMaxLines: 3,
               suffixIcon: widget.obscureText
                   ? IconButton(
                       icon: Icon(hidePassword

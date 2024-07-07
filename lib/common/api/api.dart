@@ -7,8 +7,10 @@ import 'package:bloomskyx_app/models/profile_response_entity.dart';
 import 'package:bloomskyx_app/models/response_model_entity.dart';
 import 'package:bloomskyx_app/models/score_response_entity.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' show Get;
 import 'package:get/route_manager.dart';
 
+import '../../models/checkin_info_entity_entity.dart';
 import '../../models/store_account_entity.dart';
 import '../../widget/default_toast.dart';
 import 'token_interceptor.dart';
@@ -50,6 +52,7 @@ class Api {
       return ResponseModelEntity.fromJson(res);
     } catch (e) {
       if (e is DioException) {
+        print("http error= $e");
         var res = e.response;
         if (res?.statusCode == 400) {
           var resMap = jsonDecode(res.toString());
@@ -160,9 +163,9 @@ class Api {
     return responseModel.data["accessToken"];
   }
 
-  Future<int> getCheckIn() async {
+  Future<CheckinInfoEntityEntity> getCheckIn() async {
     ResponseModelEntity response = await http("get", "/api/v1/score/checkin");
-    return response.data["amount"];
+    return CheckinInfoEntityEntity.fromJson(response.data);
   }
 
   Future<int> checkIn() async {

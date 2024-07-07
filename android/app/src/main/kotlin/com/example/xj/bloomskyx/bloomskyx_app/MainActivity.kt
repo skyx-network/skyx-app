@@ -1,4 +1,4 @@
-package com.example.xj.bloomskyx.bloomskyx_app
+package com.xj.skyx.app
 
 import io.flutter.embedding.android.FlutterActivity
 

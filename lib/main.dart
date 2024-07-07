@@ -12,12 +12,13 @@ import 'package:bloomskyx_app/page/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'common/icon/bottom_nav_bar.dart';
+import 'common/logger.dart';
 import 'common/store.dart';
 import 'curved_navigation_bar.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // 初始化 Flutter 绑定
 
@@ -25,7 +26,6 @@ void main() async {
   var currentAccount = store.getCurrentAccount();
   if (currentAccount != null) {
     Api().setAuth(currentAccount.accessToken);
-    // Api().setAuth("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU4NDUzNjAsInBheWxvYWQiOnsiZW1haWwiOiI3NzQxMzk4MTNAcXEuY29tIiwiaWQiOiI3OWI2OTY1ZWRlZDk0YTkwYjE4M2FhODg4MjJhYTMzZSIsInJvbGUiOiJjdXN0b21lciIsInR5cGUiOiJ4LWFjY2VzcyJ9fQ.E_cjNW6ouKCjaahNALMnN65ugBsbwPMsjcDYCJIG7uI");
   }
   // store.clear();
   runApp(const MyApp());
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: GetMaterialApp(
-        title: 'BloomskyX',
+        title: 'SkyX',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
           //     "isNoRequiredLoginRoute:${!isNoRequiredLoginRoute(routing?.current)}");
           if (!isLogin && !isNoRequiredLoginRoute(routing?.current)) {
             SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-              // print("跳转到login");
+              logger.i("routingCallback 跳转到login");
               Get.offAllNamed("/login");
             });
           }
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
-        children: [HomePage(), DevicePage(), ExplorerPage(), PersonalPage()],
+        children: [HomePage(), ExplorerPage(), PersonalPage()],
       ),
       bottomNavigationBar: Container(
           child: Column(
@@ -159,33 +159,33 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ],
         ),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Icon(
+        //       BottomNavBar.device,
+        //       size: 26,
+        //       color: _navIndex == 1 ? Colors.white : defaultColor,
+        //     ),
+        //     Text(
+        //       "Device",
+        //       style: buildTextStyle(1),
+        //     )
+        //   ],
+        // ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              BottomNavBar.device,
+              _navIndex == 1
+                  ? BottomNavBar.explorerFull
+                  : BottomNavBar.explorer,
               size: 26,
               color: _navIndex == 1 ? Colors.white : defaultColor,
             ),
             Text(
-              "Device",
-              style: buildTextStyle(1),
-            )
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              _navIndex == 2
-                  ? BottomNavBar.explorerFull
-                  : BottomNavBar.explorer,
-              size: 26,
-              color: _navIndex == 2 ? Colors.white : defaultColor,
-            ),
-            Text(
               "Explorer",
-              style: buildTextStyle(2),
+              style: buildTextStyle(1),
             )
           ],
         ),
@@ -195,11 +195,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Icon(
               BottomNavBar.personal,
               size: 26,
-              color: _navIndex == 3 ? Colors.white : defaultColor,
+              color: _navIndex == 2 ? Colors.white : defaultColor,
             ),
             Text(
               "Personal",
-              style: buildTextStyle(3),
+              style: buildTextStyle(2),
             )
           ],
         ),
