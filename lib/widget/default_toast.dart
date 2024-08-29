@@ -6,7 +6,9 @@ import 'package:oktoast/oktoast.dart';
 enum DefaultToastType { Right, Error }
 
 class DefaultToast {
-  static void show(String text, {DefaultToastType? type}) {
+  static void show(String text,
+      {DefaultToastType? type,
+      Duration? duration = const Duration(seconds: 5)}) {
     IconData? icon;
     Color? iconColor;
 
@@ -19,7 +21,7 @@ class DefaultToast {
     }
 
     showToastWidget(
-      duration: Duration(seconds: 5),
+      duration: duration,
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 45),
         child: Container(

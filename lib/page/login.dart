@@ -1,4 +1,5 @@
 import 'package:bloomskyx_app/common/api/api.dart';
+import 'package:bloomskyx_app/common/appColors.dart';
 import 'package:bloomskyx_app/common/store.dart';
 import 'package:bloomskyx_app/models/login_response_entity.dart';
 import 'package:bloomskyx_app/widget/default_text_field.dart';
@@ -56,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     bottomRight: Radius.circular(100),
                   ),
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF56c8af), Color(0xFF58bb9f)],
+                    colors: AppColors.loginTopColor,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -145,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         "Forgot your password?",
                         style:
-                            TextStyle(color: Color(0xFF6cc1a2), fontSize: 16),
+                            TextStyle(color: AppColors.textButtonColor, fontSize: 16),
                       ),
                     ),
                     const SizedBox(
@@ -201,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Color(0xFF37ad8b)),
+                              MaterialStateProperty.all(Color(0xFF015678)),
                         ),
                         child: const Text(
                           "Sign in",
@@ -216,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         "Create an account",
                         style:
-                            TextStyle(color: Color(0xFF6cc1a2), fontSize: 16),
+                            TextStyle(color: AppColors.textButtonColor, fontSize: 16),
                       ),
                     )
                   ],

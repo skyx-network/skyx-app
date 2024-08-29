@@ -14,26 +14,13 @@ class _Rank {
 class RankingTable extends StatelessWidget {
   RankingTable(
       {super.key,
-      required this.rankList,
+      required this.rankData,
       required this.tabController,
       required this.tabList});
 
-  final List<LeaderboardResponseRank> rankList;
+  final Map<String, LeaderboardResponseEntity>? rankData;
   final TabController tabController;
   final List<String> tabList;
-
-  // final List<_Rank> data = [
-  //   _Rank("Xu******422@gmail.com", "19779.00"),
-  //   _Rank("Xw******088@protonmail.com", "17704.00"),
-  //   _Rank("35******766@gq.com", "17623.00"),
-  //   _Rank("tj******[97@gmail.com", "19779.00"),
-  //   _Rank("th******y95@gmail.com", "19779.00"),
-  //   _Rank("Xu******422@gmail.com", "19779.00"),
-  //   _Rank("Xw******088@protonmail.com", "17704.00"),
-  //   _Rank("35******766@gq.com", "17623.00"),
-  //   _Rank("tj******[97@gmail.com", "19779.00"),
-  //   _Rank("th******y95@gmail.com", "19779.00")
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +50,7 @@ class RankingTable extends StatelessWidget {
                   (label) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
-                      children: _buildRowRank(),
+                      children: _buildRowRank(rankData![label]!.rank),
                     ),
                   ),
                 )
@@ -74,8 +61,7 @@ class RankingTable extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildRowRank() {
-    var index = 1;
+  List<Widget> _buildRowRank(List<LeaderboardResponseRank> rankList) {
     return rankList
         .map(
           (d) => Padding(

@@ -67,7 +67,7 @@ class _SwitchAccountPageState extends State<SwitchAccountPage> {
                   Get.toNamed("/login");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF37ad8b)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF015678)),
                 ),
                 child: Text(
                   "Add Account",

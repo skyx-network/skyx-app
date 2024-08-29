@@ -205,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
       color: Colors.white,
-      buttonBackgroundColor: Color.fromRGBO(32, 187, 156, 1),
+      buttonBackgroundColor: Color(0XFF3271ae),
       backgroundColor: Colors.black,
       animationCurve: Curves.easeInOut,
       animationDuration: Duration(milliseconds: 300),

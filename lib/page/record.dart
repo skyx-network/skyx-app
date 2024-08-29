@@ -38,48 +38,48 @@ class _RecordPageState extends State<RecordPage> {
         ),
       ),
       body: CustomFutureBuilder<List<Object>>(
-          future: fetchData(),
-          builder: (context, snapshot) {
-            ProfileResponseEntity profile =
-                snapshot.data?[1] as ProfileResponseEntity;
-            return SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          text: "You have harvested a total of ",
-                          children: [
-                            TextSpan(
-                                text: "${profile.totalEarning.score}",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(47, 104, 85, 1))),
-                            TextSpan(text: " NANO")
-                          ],
+        future: fetchData,
+        builder: (context, snapshot) {
+          ProfileResponseEntity profile =
+              snapshot.data?[1] as ProfileResponseEntity;
+          return SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
+                        text: "You have harvested a total of ",
+                        children: [
+                          TextSpan(
+                              text: "${profile.totalEarning.score}",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF015678))),
+                          TextSpan(text: " NANO")
+                        ],
                       ),
                     ),
-                    Table(
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      children: [
-                        buildTableTitle(),
-                        ...buildDataCell(
-                            snapshot.data?[0] as ScoreResponseEntity?)
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                  Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                      buildTableTitle(),
+                      ...buildDataCell(
+                          snapshot.data?[0] as ScoreResponseEntity?)
+                    ],
+                  )
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -118,7 +118,7 @@ class _RecordPageState extends State<RecordPage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFF85bea9),
+                    color: Color(0xFF4994c4),
                     fontWeight: FontWeight.w700),
               ),
               Text(

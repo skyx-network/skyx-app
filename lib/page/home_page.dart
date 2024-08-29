@@ -4,9 +4,7 @@ import 'package:bloomskyx_app/models/profile_response_entity.dart';
 import 'package:bloomskyx_app/widget/default_toast.dart';
 import 'package:bloomskyx_app/widget/floating_circle.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
 
 import '../common/api/api.dart';
@@ -156,11 +154,16 @@ class _HomePageState extends State<HomePage>
                   //   },
                   //   child: Text(
                   //     'Withdraw',
-                  //     style: TextStyle(color: Color(0xFF336352)),
+                  //     style: TextStyle(
+                  //       color: Color(0xFF336352),
+                  //     ),
                   //   ),
                   //   style: OutlinedButton.styleFrom(
                   //     backgroundColor: Colors.white,
-                  //     side: BorderSide(color: Color(0xFF6da291), width: 2),
+                  //     side: BorderSide(
+                  //       color: Color(0xFF6da291),
+                  //       width: 2,
+                  //     ),
                   //   ),
                   // )
                 ],
@@ -172,7 +175,7 @@ class _HomePageState extends State<HomePage>
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(30, 100, 30, 10),
+                    padding: EdgeInsets.fromLTRB(30, 70, 30, 10),
                     width: double.infinity,
                     child: Image.asset("assets/images/home/banner.png"),
                   ),
@@ -183,14 +186,14 @@ class _HomePageState extends State<HomePage>
                       height: 45,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xFF67d8b0),
+                          color: Color(0xFF015678),
                           width: 2,
                         ),
                         gradient: LinearGradient(
                           colors: [
-                            Color.fromRGBO(140, 251, 188, 1),
-                            Color.fromRGBO(200, 253, 231, 1),
-                            Color.fromRGBO(142, 250, 188, 1)
+                            Color.fromRGBO(140, 221, 250, 1),
+                            Color.fromRGBO(200, 238, 255, 1),
+                            Color.fromRGBO(142, 221, 250, 1)
                           ],
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
@@ -200,14 +203,16 @@ class _HomePageState extends State<HomePage>
                       child: Center(
                         child: Text(
                           "Harvested",
-                          style: TextStyle(color: Color(0xFF316b4c)),
+                          style: TextStyle(
+                            color: Color(0xFF015678),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 90,
-                    left: 60,
+                    top: 30,
+                    left: 110,
                     child: AnimatedBuilder(
                       animation: _animationController,
                       builder: (context, child) {
@@ -241,45 +246,46 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 100,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed("/record");
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFfdf1d3),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              offset: Offset(0, 1),
-                              blurRadius: 10,
-                            )
-                          ],
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomLeft: Radius.circular(20)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Record",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 14,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  // Positioned(
+                  //   bottom: 100,
+                  //   right: 0,
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Get.toNamed("/record");
+                  //     },
+                  //     child: Container(
+                  //       width: 100,
+                  //       height: 40,
+                  //       decoration: BoxDecoration(
+                  //         color: Color(0xFFfdf1d3),
+                  //         boxShadow: [
+                  //           BoxShadow(
+                  //             color: Colors.black38,
+                  //             offset: Offset(0, 1),
+                  //             blurRadius: 10,
+                  //           )
+                  //         ],
+                  //         borderRadius: BorderRadius.only(
+                  //           topLeft: Radius.circular(20),
+                  //           bottomLeft: Radius.circular(20),
+                  //         ),
+                  //       ),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Text(
+                  //             "Record",
+                  //             style: TextStyle(fontSize: 15),
+                  //           ),
+                  //           Icon(
+                  //             Icons.arrow_forward_ios_outlined,
+                  //             size: 14,
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -328,19 +334,32 @@ Widget _buildGrantBalance(ProfileResponseEntity? accountProfile) {
     children: [
       Text(
         "Grants Balance",
-        style: TextStyle(fontSize: 15),
+        style: TextStyle(
+          fontSize: 15,
+        ),
       ),
       Row(
         children: [
-          AnimatedFlipCounter(
-            duration: Duration(milliseconds: 1000),
-            value: accountProfile?.balance.score ?? 0,
-            fractionDigits: 2,
-            textStyle: TextStyle(
-                color: Color.fromRGBO(47, 104, 85, 1),
+          if (accountProfile == null)
+            const Text(
+              "--",
+              style: TextStyle(
+                color: Color(0xFF015678),
                 fontSize: 26,
-                fontWeight: FontWeight.w800),
-          ),
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          if (accountProfile != null)
+            AnimatedFlipCounter(
+              duration: Duration(milliseconds: 1300),
+              value: accountProfile.balance.score,
+              fractionDigits: 2,
+              textStyle: const TextStyle(
+                color: Color(0xFF015678),
+                fontSize: 26,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           SizedBox(
             width: 5,
           ),
@@ -349,12 +368,37 @@ Widget _buildGrantBalance(ProfileResponseEntity? accountProfile) {
             baselineType: TextBaseline.alphabetic,
             child: Text(
               "NANO",
-              style: TextStyle(
-                  color: Color.fromRGBO(47, 104, 85, 1), fontSize: 15),
+              style: TextStyle(color: Color(0xFF015678), fontSize: 15),
             ),
           ),
         ],
-      )
+      ),
+      SizedBox(
+        height: 5,
+      ),
+      GestureDetector(
+        onTap: () {
+          Get.toNamed("/record");
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Learn more ",
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF6a7b89),
+                  fontWeight: FontWeight.w500),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Color(0xFF6a7b89),
+              weight: 1000,
+            )
+          ],
+        ),
+      ),
     ],
   );
 }

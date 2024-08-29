@@ -75,7 +75,7 @@ class PersionalCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                        color: Color(0xFFf7faf9),
+                        color: Color(0xFF6e9bc5),
                         borderRadius: BorderRadius.circular(25)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +145,7 @@ class PersionalCard extends StatelessWidget {
           "$num NANO",
           style: TextStyle(
               fontSize: 20,
-              color: Color(0xFF76b4a2),
+              color: Color(0xFF6e9bc5),
               fontWeight: FontWeight.w500),
         )
       ],

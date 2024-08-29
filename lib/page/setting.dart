@@ -157,14 +157,14 @@ class SettingPage extends StatelessWidget {
           "Setting",
           style: TextStyle(fontSize: 22),
         ),
-        backgroundColor: Color(0xFFf5fffb),
+        backgroundColor: Color(0xFFc6e9f5),
       ),
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(25),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [Color(0xFFf5fffb), Colors.white],
+              colors: [Color(0xFFc6e9f5), Colors.white],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
         ),

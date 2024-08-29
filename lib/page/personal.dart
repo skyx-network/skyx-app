@@ -8,30 +8,17 @@ import 'package:get/get.dart';
 
 import '../widget/custom_future_builder.dart';
 
-class PersonalPage extends StatefulWidget {
+class PersonalPage extends StatelessWidget {
   const PersonalPage({super.key});
-
-  @override
-  State<PersonalPage> createState() => _PersonalPageState();
-}
-
-class _PersonalPageState extends State<PersonalPage> {
-  late Future<ProfileResponseEntity> _future;
 
   Future<ProfileResponseEntity> fetchData() async {
     return await Api().getAccountProfile();
   }
 
   @override
-  void initState() {
-    super.initState();
-    _future = fetchData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return CustomFutureBuilder<ProfileResponseEntity>(
-        future: _future,
+        future: fetchData,
         builder: (context, snapshot) {
           var data = snapshot.data;
           return Container(
@@ -42,7 +29,7 @@ class _PersonalPageState extends State<PersonalPage> {
                   height: 300,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0XFF50b08f), Color(0XFF85cebf)],
+                      colors: [Color(0XFF3271ae), Color(0XFF106898)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),

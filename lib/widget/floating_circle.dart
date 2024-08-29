@@ -47,13 +47,13 @@ class _FloatingCircleState extends State<FloatingCircle>
             height: 58,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
-                Color(0xFFa0fccc),
-                Color(0xFF8cedb8),
-                Color(0xFFc1fce0),
+                Color(0xFF9fe2fc),
+                Color(0xFF8cd1ed),
+                Color(0xFFc0ebfc),
               ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
               shape: BoxShape.circle,
               border: Border.all(
-                color: Color(0xFFcdf8eb),
+                color: Color(0xFFcdebf7),
                 width: 2,
               ),
             ),
@@ -63,7 +63,7 @@ class _FloatingCircleState extends State<FloatingCircle>
                 child: Text(
                   widget.amount <= 0 ? "waiting" : "${widget.amount}",
                   style: TextStyle(
-                    color: Color.fromRGBO(47, 104, 85, 1),
+                    color: Color(0xFF015678),
                     fontWeight: FontWeight.w700,
                     fontSize:  widget.amount <= 0 ? 10 : 16
                   ),

@@ -50,8 +50,9 @@ class _ExplorerPageState extends State<ExplorerPage> {
 
   @override
   void initState() {
-    _loadData();
     super.initState();
+
+    _loadData();
   }
 
   @override
@@ -82,7 +83,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.xj.skyx.app',
+          // userAgentPackageName: 'com.xj.skyx.app3',
           retinaMode: false,
         ),
         if (data.isNotEmpty)

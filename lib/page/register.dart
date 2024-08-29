@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../common/appColors.dart';
 import '../widget/loading.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   var titleTextStyle = TextStyle(color: Colors.white, fontSize: 28);
-  var linkTextStyle = const TextStyle(color: Color(0xFF86bca5));
+  var linkTextStyle = const TextStyle(color: AppColors.textButtonColor);
 
   final _formKey = GlobalKey<FormState>();
   bool checkBoxValue = false;
@@ -56,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Get.back(closeOverlays: true, canPop: false);
             },
           ),
-          backgroundColor: Color(0xFF56c8af),
+          backgroundColor: AppColors.loginTopColor[0],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     bottomRight: Radius.circular(100),
                   ),
                   gradient: LinearGradient(
-                    colors: [Color(0xFF56c8af), Color(0xFF58bb9f)],
+                    colors: AppColors.loginTopColor,
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -145,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           icon: Text(
                             _buttonText,
                             style: TextStyle(
-                              color: Color(0xFF86bca5),
+                              color: AppColors.textButtonColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -236,7 +237,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 GestureDetector(
                                   onTap: () async {
                                     await launchUrl(
-                                        Uri.parse("https://skyxglobal.com/#/user-agreement"));
+                                      Uri.parse(
+                                          "https://skyxglobal.com/#/user-agreement"),
+                                    );
                                   },
                                   child: Text(
                                     "User Agreement",
@@ -247,7 +250,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 GestureDetector(
                                   onTap: () async {
                                     await launchUrl(
-                                        Uri.parse("https://skyxglobal.com/#/privacy-policy"));
+                                      Uri.parse(
+                                          "https://skyxglobal.com/#/privacy-policy"),
+                                    );
                                   },
                                   child: Text(
                                     "Privacy Policy",
@@ -298,7 +303,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Color(0xFF37ad8b)),
+                                MaterialStateProperty.all(Color(0xFF015678)),
                           ),
                           child: const Text(
                             "Sign up",
@@ -306,7 +311,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20,)
+                      const SizedBox(
+                        height: 20,
+                      )
                     ],
                   ),
                 ),
@@ -332,14 +339,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (_start == 60) {
       try {
+        Loading.show("Loading");
         await Api().sendVerifyCode(email);
         _startTimer();
-        print("发送验证码");
+        Loading.close();
       } catch (e) {
         print(e);
+        Loading.close();
       }
-
-      return;
     }
   }
 

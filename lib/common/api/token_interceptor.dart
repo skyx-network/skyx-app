@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:bloomskyx_app/common/store.dart';
 import 'package:dio/dio.dart';
 import 'package:get/route_manager.dart';
 
-import '../logger.dart';
+import '../../widget/default_toast.dart';
 
 class TokenInterceptor extends Interceptor {
   final Dio dio;
@@ -50,7 +52,20 @@ class TokenInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    print("token onError:${err.response}");
+    print("token onError:${err}");
+    print(err.type);
+    if (err.type == DioExceptionType.connectionTimeout ||
+        err.type == DioExceptionType.receiveTimeout ||
+        err.type == DioExceptionType.sendTimeout ||
+        err.type == DioExceptionType.connectionError ||
+        err.type == DioExceptionType.unknown) {
+      DefaultToast.show(
+        'Please check the network connection!',
+        type: DefaultToastType.Error,
+        duration: const Duration(seconds: 6),
+      );
+      // return;
+    }
     // logger.i(err.requestOptions.path);
     if (err.response?.statusCode == 401 &&
         err.requestOptions.path != "/api/v1/user/login") {

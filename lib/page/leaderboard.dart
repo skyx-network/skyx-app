@@ -28,7 +28,6 @@ class _LeaderboardState extends State<Leaderboard>
   }
 
   Future<Map<String, LeaderboardResponseEntity>> fetchData() async {
-    print(getTimestampOfEndOfDay(7));
     int now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     var allInfo = await Api().getLeaderboardInfo();
     var weekInfo = await Api()
@@ -68,91 +67,91 @@ class _LeaderboardState extends State<Leaderboard>
         ),
       ),
       body: CustomFutureBuilder<Map<String, LeaderboardResponseEntity>>(
-          future: fetchData(),
-          builder: (context, snapshot) {
-            LeaderboardResponseEntity? leaderboardInfo =
-                snapshot.data?[tabList[_tabController.index]];
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _StatisticalData(
-                            value: '${leaderboardInfo?.me.index}',
-                            unit: "Rank",
-                            icon: Icon(Icons.ac_unit),
-                            backgroundColor: Color(0xFFe8f5f2),
-                            describe: "My Ranking"),
-                        Container(
-                          width: 20,
-                          height: 38,
-                          child: VerticalDivider(
-                            color: Color(0xFFeff1ee),
-                            thickness: 2.0,
-                          ),
-                        ),
-                        _StatisticalData(
-                          value: '${leaderboardInfo?.me.amount}',
-                          unit: "NANO",
+        future: fetchData,
+        builder: (context, snapshot) {
+          LeaderboardResponseEntity? leaderboardInfo =
+              snapshot.data?[tabList[0]];
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _StatisticalData(
+                          value: '${leaderboardInfo?.me.index}',
+                          unit: "Rank",
                           icon: Icon(Icons.ac_unit),
-                          backgroundColor: Color(0xFFfbf5e4),
-                          describe: "My Grants",
+                          backgroundColor: Color(0xFFe8f5f2),
+                          describe: "My Ranking"),
+                      Container(
+                        width: 20,
+                        height: 38,
+                        child: VerticalDivider(
+                          color: Color(0xFFeff1ee),
+                          thickness: 2.0,
                         ),
-                      ],
-                    ),
+                      ),
+                      _StatisticalData(
+                        value: '${leaderboardInfo?.me.amount}',
+                        unit: "NANO",
+                        icon: Icon(Icons.ac_unit),
+                        backgroundColor: Color(0xFFfbf5e4),
+                        describe: "My Grants",
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFf7f7f5),
-                        borderRadius: BorderRadius.circular(35),
-                        border: Border.all(color: Color(0xFFdddfdc), width: 2)),
-                    child: TabBar(
-                        padding: EdgeInsets.zero,
-                        labelPadding: EdgeInsets.zero,
-                        controller: _tabController,
-                        unselectedLabelColor: Color(0xFF6b6b6b),
-                        labelColor: Colors.black,
-                        tabs: tabList
-                            .map(
-                              (label) => Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 25),
-                                child: Text(
-                                  label,
-                                  textAlign: TextAlign.center,
-                                ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFf7f7f5),
+                      borderRadius: BorderRadius.circular(35),
+                      border: Border.all(color: Color(0xFFdddfdc), width: 2)),
+                  child: TabBar(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      controller: _tabController,
+                      unselectedLabelColor: Color(0xFF6b6b6b),
+                      labelColor: Colors.black,
+                      tabs: tabList
+                          .map(
+                            (label) => Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 25),
+                              child: Text(
+                                label,
+                                textAlign: TextAlign.center,
                               ),
-                            )
-                            .toList(),
-                        indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35),
-                          color: Color(0xFFd9ece7),
-                        ),
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        dividerHeight: 0),
+                            ),
+                          )
+                          .toList(),
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35),
+                        color: Color(0xFFd9ece7),
+                      ),
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      dividerHeight: 0),
+                ),
+                Expanded(
+                  child: RankingTable(
+                    tabController: _tabController,
+                    tabList: tabList,
+                    rankData: snapshot.data,
                   ),
-                  Expanded(
-                    child: RankingTable(
-                      tabController: _tabController,
-                      tabList: tabList,
-                      rankList:
-                          leaderboardInfo != null ? leaderboardInfo.rank : [],
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -64,7 +64,7 @@ class Api {
             DefaultToast.show('Entity already exists',
                 type: DefaultToastType.Error);
           }
-        } else if (res?.statusCode != 200) {
+        } else if (res?.statusCode != 200 && res?.statusCode != null) {
           DefaultToast.show('Unknown error (${res?.statusCode})');
         }
       } else {
